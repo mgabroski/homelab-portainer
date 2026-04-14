@@ -1,0 +1,15 @@
+singleQuote: true
+trailingComma: none
+tabWidth: 2
+useTabs: false
+proseWrap: always
+endOfLine: lf
+
+overrides:
+  - files: "*.yml"
+    options:
+      singleQuote: false
+      bracketSpacing: true
+  - files: "*.md"
+    options:
+      proseWrap: always

@@ -1,0 +1,45 @@
+# homelab-portainer
+# Portainer CE — Visual Docker management dashboard
+# Stage 1, Project 1 — Core Lab Control Layer
+#
+# Decisions logged in docs/decisions.md
+# Security posture documented in docs/security.md
+
+name: homelab-portainer
+
+services:
+  portainer:
+    container_name: homelab-portainer
+    image: portainer/portainer-ce:2.21.4
+    # ARM64 native — multi-arch image, runs natively on M2
+    # Version pinned deliberately — see docs/decisions.md Decision 001
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:9000:9000"
+      # HTTP UI — localhost only, no LAN exposure
+      # Temporary pre-Caddy exception — see docs/decisions.md Decision 003
+      # Port 8000 omitted — Edge agent out of scope, see Decision 002
+      # Port 9443 omitted — Caddy owns TLS in Project 4, see Decision 003
+
+    volumes:
+      - homelab-portainer-data:/data
+      # Named volume — Portainer state persists across container restarts
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Docker socket — required for Portainer to manage containers
+      # :ro flag pending Step 6 runtime validation — see Decision 005
+      # Socket risk accepted and documented in docs/security.md
+
+    networks:
+      - homelab-internal
+      # Explicit network — no reliance on Docker default bridge
+      # homelab-proxy added here when Caddy arrives in Project 4
+
+# All Portainer application data — do not remove without a backup
+volumes:
+  homelab-portainer-data:
+
+# Internal network for this service
+# Extends to homelab-proxy when Caddy is added in Project 4
+networks:
+  homelab-internal:
