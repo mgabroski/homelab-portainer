@@ -202,3 +202,15 @@ Declaring them external and creating them manually enforces the exact names
 required by NAMING-CONVENTIONS.md with no prefix. **Impact:** Volume and network
 must be created manually before docker compose up on any new machine. This is
 documented in docs/runbook.md.
+
+## Decision 018 — Makefile added for single-command management
+
+**Date:** 2026-04-21 **Decision:** A Makefile is added at root level providing
+single-command management for all common operations: up, down, restart, logs,
+ps, pull, update, backup, restore-test, clean, and validate. **Reason:** Long
+Docker Compose commands are error-prone and hard to remember across projects. A
+Makefile provides a consistent, documented interface that works on any Mac or
+Linux machine without additional dependencies. It also embeds the backup and
+restore procedures directly into the repo as executable targets rather than just
+documentation. **Impact on file plan:** Additive only. Makefile added at root
+level per the STANDARDS.md allowance for genuinely needed additions.

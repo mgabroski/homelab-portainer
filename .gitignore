@@ -26,3 +26,6 @@ yarn-error.log
 
 # Prettier cache
 .prettier-cache
+
+# Backups — local only, never commit
+backups/
