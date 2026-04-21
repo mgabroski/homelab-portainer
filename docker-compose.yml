@@ -36,10 +36,14 @@ services:
       # homelab-proxy added here when Caddy arrives in Project 4
 
 # All Portainer application data — do not remove without a backup
+# Declared external — created manually to enforce exact naming convention
 volumes:
   homelab-portainer-data:
+    external: true
 
 # Internal network for this service
+# Declared external — created manually to enforce exact naming convention
 # Extends to homelab-proxy when Caddy is added in Project 4
 networks:
   homelab-internal:
+    external: true

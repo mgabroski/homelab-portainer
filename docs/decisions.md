@@ -190,3 +190,15 @@ from blocking commits and removes the need for manual formatting fixes.
 **Workflow:** lint-staged runs Prettier first to fix, then linters validate.
 Commits only land if both pass. **Pinned version:** exact version resolved by
 Yarn at install time.
+
+## Decision 017 — Volume and network declared as external
+
+**Date:** 2026-04-21 **Decision:** homelab-portainer-data volume and
+homelab-internal network are declared as external: true in docker-compose.yml
+and created manually before starting the container. **Reason:** Docker Compose
+automatically prefixes volumes and networks with the project name, producing
+homelab-portainer_homelab-portainer-data instead of homelab-portainer-data.
+Declaring them external and creating them manually enforces the exact names
+required by NAMING-CONVENTIONS.md with no prefix. **Impact:** Volume and network
+must be created manually before docker compose up on any new machine. This is
+documented in docs/runbook.md.
