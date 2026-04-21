@@ -25,7 +25,7 @@ services:
     volumes:
       - homelab-portainer-data:/data
       # Named volume — Portainer state persists across container restarts
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       # Docker socket — required for Portainer to manage containers
       # :ro flag pending Step 6 runtime validation — see Decision 005
       # Socket risk accepted and documented in docs/security.md

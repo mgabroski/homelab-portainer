@@ -61,8 +61,10 @@ functionality is lost. If any operation fails with :ro, the flag stays off and
 the reason is documented here. **Risk accepted:** The socket mount grants
 Portainer effective root-equivalent access to the Docker host via the Docker
 API. This is an accepted and documented trade-off for a container management
-tool. Full risk treatment is in docs/security.md. **Outcome:** [To be filled in
-during Step 6 validation]
+tool. Full risk treatment is in docs/security.md. **Outcome:** Validated during
+Step 6 hardening on 2026-04-21. All five operations — view, stop, start, remove,
+create — passed correctly with :ro applied. The read-only flag is confirmed and
+locked in docker-compose.yml.
 
 ---
 
@@ -101,8 +103,13 @@ and effective mitigation.
 
 **Date:** 2026-04-10 **Decision:** The internal user that the Portainer CE
 container runs as was not confirmed from documentation alone. This will be
-verified during Step 6 deployment using docker exec whoami. **Outcome:** [To be
-filled in during Step 6 verification]
+verified during Step 6 deployment using docker exec whoami. **Outcome:**
+Verified during Step 6 hardening on 2026-04-21. The Portainer CE image does not
+include whoami or shell utilities — it is a minimal distroless-style image.
+Container user determined via docker inspect using '{{json .Config.User}}' which
+returned an empty string, meaning the image defaults to root internally. This is
+upstream Portainer CE behaviour and cannot be changed without a custom image
+build. Accepted and documented in docs/security.md.
 
 ---
 
